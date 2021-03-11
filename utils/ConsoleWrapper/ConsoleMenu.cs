@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace utils.ConsoleExt
+namespace Ajiva.Utils.ConsoleWrapper
 {
     public class ConsoleMenu
     {

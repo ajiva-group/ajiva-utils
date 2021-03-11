@@ -1,4 +1,4 @@
-﻿namespace utils.ConsoleExt
+﻿namespace Ajiva.Utils.ConsoleWrapper
 {
     public static class ConsoleExtensions
     {

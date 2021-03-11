@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace utils.ConsoleExt
+namespace Ajiva.Utils.ConsoleWrapper
 {
     public sealed class ConsoleRolBlock
     {
