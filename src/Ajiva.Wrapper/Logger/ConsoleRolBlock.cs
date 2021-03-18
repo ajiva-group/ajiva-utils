@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ajiva.Utils.ConsoleWrapper
+namespace Ajiva.Wrapper.Logger
 {
     public sealed class ConsoleRolBlock
     {

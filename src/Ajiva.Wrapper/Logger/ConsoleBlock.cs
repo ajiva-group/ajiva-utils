@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ajiva.Utils.ConsoleWrapper
+namespace Ajiva.Wrapper.Logger
 {
     public class ConsoleBlock
     {
@@ -14,19 +14,19 @@ namespace Ajiva.Utils.ConsoleWrapper
             lock (LogHelper.WriteLock)
             {
                 this.Count = count;
-                Top = Console.CursorTop;
-                Console.SetCursorPosition(0, Top + count);
+                Top = System.Console.CursorTop;
+                System.Console.SetCursorPosition(0, Top + count);
             }
         }
 
         public void WriteAt(string msg, int position)
         {
-            if (Console.BufferWidth < msg.Length + BufferTolerance)
+            if (System.Console.BufferWidth < msg.Length + BufferTolerance)
             {
-                Console.BufferWidth = msg.Length + BufferTolerance;
+                System.Console.BufferWidth = msg.Length + BufferTolerance;
             }
             if (position > Count) throw new ArgumentOutOfRangeException(nameof(position), position, "expected les than count: " + Count);
-            LogHelper.Write("".FillUp(Console.BufferWidth), Top + position);
+            LogHelper.Write("".FillUp(System.Console.BufferWidth), Top + position);
             LogHelper.Write(msg + "\n", Top + position);
         }
 
@@ -39,7 +39,7 @@ namespace Ajiva.Utils.ConsoleWrapper
         public void WriteAtNoBreak(string msg, int position)
         {
             if (position > Count) throw new ArgumentOutOfRangeException(nameof(position), position, "expected les than count: " + Count);
-            LogHelper.Write("".FillUp(Console.BufferWidth), Top + position);
+            LogHelper.Write("".FillUp(System.Console.BufferWidth), Top + position);
             LogHelper.Write(msg, Top + position);
         }
     }

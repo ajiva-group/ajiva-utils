@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Ajiva.Utils.ConsoleWrapper
+namespace Ajiva.Wrapper.Logger
 {
     public class ConsoleMenu
     {
@@ -19,7 +19,7 @@ namespace Ajiva.Utils.ConsoleWrapper
             do
             {
                 LogHelper.WriteLine("Chose Action [0...{i}]");
-            } while (int.TryParse(Console.ReadLine(), out num) && num < 0 && num > i);
+            } while (int.TryParse(System.Console.ReadLine(), out num) && num < 0 && num > i);
 
             items[num].Action?.Invoke();
         }

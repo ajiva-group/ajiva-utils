@@ -1,6 +1,6 @@
 ﻿using System.Buffers;
 
-namespace Ajiva.Utils.Extensions.Stream
+namespace Ajiva.Extensions.Stream
 {
     public static class StreamExt
     {

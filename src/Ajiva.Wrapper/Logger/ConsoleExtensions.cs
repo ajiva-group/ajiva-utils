@@ -1,4 +1,4 @@
-﻿namespace Ajiva.Utils.ConsoleWrapper
+﻿namespace Ajiva.Wrapper.Logger
 {
     public static class ConsoleExtensions
     {
