@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Ajiva.Console\Ajiva.Console.csproj" />
+      <ProjectReference Include="..\Ajiva.Extensions\Ajiva.Extensions.csproj" />
+      <ProjectReference Include="..\Ajiva.Net\Ajiva.Net.csproj" />
+    </ItemGroup>
+
+</Project>
