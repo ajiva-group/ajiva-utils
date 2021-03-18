@@ -19,7 +19,7 @@ namespace Ajiva.Wrapper.Logger
             do
             {
                 LogHelper.WriteLine("Chose Action [0...{i}]");
-            } while (int.TryParse(System.Console.ReadLine(), out num) && num < 0 && num > i);
+            } while (int.TryParse(Console.ReadLine(), out num) && num < 0 && num > i);
 
             items[num].Action?.Invoke();
         }
