@@ -8,6 +8,7 @@ namespace Ajiva.Net.Web.Scraper
 {
     public class WebScraper
     {
+        public event Action<HttpRequestMessage>? OnRequestSend;
         public Uri BaseUri { get; }
         public CookieContainer? CookieContainer { get; }
 
@@ -61,7 +62,7 @@ namespace Ajiva.Net.Web.Scraper
             foreach (var (name, value) in headers)
                 httpRequestMessage.Headers.Add(name, value);
 
-            Console.WriteLine($"Sending Request: {httpRequestMessage.RequestUri}, content: {content}");
+            OnRequestSend?.Invoke(httpRequestMessage);
             return await Client.SendAsync(httpRequestMessage);
         }
 
