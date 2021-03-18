@@ -32,7 +32,6 @@ namespace Ajiva.Wrapper.Logger
                 
                 //var (leftN, topN) = Console.GetCursorPosition();
             }
-            System.Console.Out.WriteLine();
         }
 
         public static void TransactWithColor(Action action, ConsoleColor? foreground, ConsoleColor? background)
