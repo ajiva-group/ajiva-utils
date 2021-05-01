@@ -4,6 +4,26 @@ namespace Ajiva.Wrapper.Logger
 {
     public static class LogHelper
     {
+        public static bool UseConsoleCursorPos { get; set; } = TestConsoleCursorSetSupport();
+
+        public static bool TestConsoleCursorSetSupport()
+        {
+            try
+            {
+                lock (WriteLock)
+                {
+                    var (left, top) = Console.GetCursorPosition();
+
+                    Console.SetCursorPosition(left, top);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         public static void Log(object obj)
         {
             lock (WriteLock)
@@ -22,6 +42,12 @@ namespace Ajiva.Wrapper.Logger
         {
             lock (WriteLock)
             {
+                if (UseConsoleCursorPos)
+                {
+                    Console.Write(msg);
+                    return;
+                }
+
                 var (left, top) = Console.GetCursorPosition();
 
                 if (top != position) Console.SetCursorPosition(0, position);
@@ -29,7 +55,7 @@ namespace Ajiva.Wrapper.Logger
                 Console.Write(msg);
 
                 if (top != position) Console.SetCursorPosition(left, top);
-                
+
                 //var (leftN, topN) = Console.GetCursorPosition();
             }
         }
@@ -69,22 +95,28 @@ namespace Ajiva.Wrapper.Logger
         {
             lock (WriteLock)
             {
-                var (left, top) = Console.GetCursorPosition();
+                int left = default;
+                int top = default;
+                if (UseConsoleCursorPos)
+                    (left, top) = Console.GetCursorPosition();
                 var msg = s + " [y/n]";
                 yesNo ??= new(1);
                 while (true)
                 {
                     yesNo.WriteAtNoBreak(msg, 0);
-                    Console.SetCursorPosition(msg.Length + 1, yesNo.Top);
+                    if (UseConsoleCursorPos)
+                        Console.SetCursorPosition(msg.Length + 1, yesNo.Top);
                     var key = Console.ReadKey();
                     // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
                     switch (key.Key)
                     {
                         case ConsoleKey.Y:
-                            Console.SetCursorPosition(left, top + 1);
+                            if (UseConsoleCursorPos)
+                                Console.SetCursorPosition(left, top + 1);
                             return true;
                         case ConsoleKey.N:
-                            Console.SetCursorPosition(left, top + 1);
+                            if (UseConsoleCursorPos)
+                                Console.SetCursorPosition(left, top + 1);
                             return false;
                         default:
                             msg = s + " [Y/N]! ";

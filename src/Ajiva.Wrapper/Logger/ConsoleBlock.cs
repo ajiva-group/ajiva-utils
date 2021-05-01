@@ -15,7 +15,8 @@ namespace Ajiva.Wrapper.Logger
             {
                 Count = count;
                 Top = Console.CursorTop;
-                Console.SetCursorPosition(0, Top + count);
+                if (LogHelper.UseConsoleCursorPos)
+                    Console.SetCursorPosition(0, Top + count);
             }
         }
 
