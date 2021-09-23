@@ -5,9 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Ajiva.Console\Ajiva.Console.csproj" />
       <ProjectReference Include="..\Ajiva.Extensions\Ajiva.Extensions.csproj" />
       <ProjectReference Include="..\Ajiva.Net\Ajiva.Net.csproj" />
+      <ProjectReference Include="..\Ajiva.Wrapper\Ajiva.Wrapper.csproj" />
     </ItemGroup>
 
 </Project>
