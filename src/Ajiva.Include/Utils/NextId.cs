@@ -6,20 +6,23 @@ namespace ajiva.Utils
 {
     public interface INextId<T>
     {
-        private static readonly HashSet<uint> UsedIds = new();
-
+        private static readonly ISet<uint> UsedIds = new SortedSet<uint>();
+        public static object @lock = new();
 
         public static uint Next()
         {
-            for (var i = lastId + 1; i != lastId; i++)
+            lock (@lock)
             {
-                if (i >= MaxId) i = 0;
-                
-                if (UsedIds.Contains(i)) continue;
+                for (var i = lastId + 1; i != lastId; i++)
+                {
+                    if (i >= MaxId) i = 0;
 
-                UsedIds.Add(i);
-                lastId = i;
-                return i;
+                    if (UsedIds.Contains(i)) continue;
+
+                    UsedIds.Add(i);
+                    lastId = i;
+                    return i;
+                }
             }
             throw new IndexOutOfRangeException($"For {typeof(T).FullName} the Maximum Id Limit is Reached!");
         }
