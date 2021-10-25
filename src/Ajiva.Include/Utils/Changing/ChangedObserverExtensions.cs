@@ -13,8 +13,8 @@ namespace ajiva.Utils.Changing
         {
             if (field is not null && (value is null || field.Equals(value))) return;
 
-            observer.Changed();
             field = value;
+            observer.Changed();
         }
 
         public static void RaiseChanged<T>(this IOverTimeChangingObserver observer, T? value, ref T? field) where T : IEquatable<T>
@@ -48,8 +48,8 @@ namespace ajiva.Utils.Changing
         {
             if (field is not null && (value is null || field.Equals(value))) return;
 
-            observer.Changed();
             field = value;
+            observer.Changed();
         }
 
         public static void RaiseIfChanged<T>(this IChangingObserver observer, T? field, T? value) where T : IEquatable<T>
