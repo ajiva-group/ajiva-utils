@@ -114,6 +114,34 @@ namespace ajiva.Utils.Changing
 
         private object _lock { get; } = new();
     }
+    public class ChangingObserver<TSender> : IChangingObserver<TSender> where TSender : class
+    {
+        public ChangingObserver(TSender owner)
+        {
+            Owner = owner;
+        }
+
+        private object _lock { get; } = new();
+
+        /// <inheritdoc />
+        public TSender Owner { get; set; }
+
+        /// <inheritdoc />
+        public event IChangingObserver<TSender>.OnChangedDelegate? OnChanged;
+
+        /// <inheritdoc />
+        public long Version { get; private set; }
+
+        /// <inheritdoc />
+        public void Changed()
+        {
+            lock (_lock)
+            {
+                Version++;
+                OnChanged?.Invoke(Owner);
+            }
+        }
+    }
 
     public class OverTimeChangingObserver : IOverTimeChangingObserver
     {

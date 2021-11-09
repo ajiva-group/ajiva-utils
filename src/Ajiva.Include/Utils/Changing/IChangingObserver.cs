@@ -12,6 +12,14 @@ namespace ajiva.Utils.Changing
         void Changed(TValue before, TValue after);
 
         public delegate void OnChangedDelegate(TSender sender, TValue before, TValue after);
+    }    
+    public interface IChangingObserver<TSender> where TSender : class 
+    {
+        TSender Owner { get; }
+        event OnChangedDelegate OnChanged;
+        long Version { get; }
+        void Changed();
+        public delegate void OnChangedDelegate(TSender sender);
     }
     public interface IChangingObserverOnlyAfter<TSender, TValue> where TSender : class where TValue : struct
     {
