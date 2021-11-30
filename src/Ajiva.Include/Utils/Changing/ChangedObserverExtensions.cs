@@ -1,6 +1,5 @@
 ﻿//TODO fix boxing in equal check
 using System;
-using System.Collections.Generic;
 
 namespace ajiva.Utils.Changing
 {
@@ -87,6 +86,22 @@ namespace ajiva.Utils.Changing
 
         public static void RaiseIfChanged<TChange, TSender, TValue>(this IChangingObserverOnlyAfter<TSender, TValue> observer, TChange? field, TChange? value)
             where TSender : class where TValue : struct where TChange : IEquatable<TChange>
+        {
+            if (field is not null && (value is null || field.Equals(value))) return;
+
+            observer.Changed(observer.Result());
+        }
+
+        public static void RaiseAndSetIfChanged<TChange, TValue>(this IChangingObserverOnlyValue<TValue> observer, ref TChange? field, TChange? value)
+            where TValue : struct where TChange : IEquatable<TChange>
+        {
+            if (value is not null && value.Equals(field) || field is not null && field.Equals(value)) return;
+            field = value;
+            observer.Changed(observer.Result());
+        }
+
+        public static void RaiseIfChanged<TChange, TValue>(this IChangingObserverOnlyValue<TValue> observer, TChange? field, TChange? value)
+            where TValue : struct where TChange : IEquatable<TChange>
         {
             if (field is not null && (value is null || field.Equals(value))) return;
 

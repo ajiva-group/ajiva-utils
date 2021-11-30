@@ -114,6 +114,29 @@ namespace ajiva.Utils.Changing
 
         private object _lock { get; } = new();
     }
+
+    public class ChangingObserverOnlyValue<TValue> : IChangingObserverOnlyValue<TValue> where TValue : struct
+    {
+        public ChangingObserverOnlyValue(Func<TValue> result)
+        {
+            Result = result;
+        }
+
+        /// <inheritdoc />
+        public Func<TValue> Result { get; set; }
+
+        /// <inheritdoc />
+        public event IChangingObserverOnlyValue<TValue>.OnChangedDelegate? OnChanged;
+
+        /// <inheritdoc />
+        public void Changed(TValue value)
+        {
+            lock (this)
+            {
+                OnChanged?.Invoke(value);
+            }
+        }
+    }
     public class ChangingObserver<TSender> : IChangingObserver<TSender> where TSender : class
     {
         public ChangingObserver(TSender owner)
