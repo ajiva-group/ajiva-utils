@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
-using Ajiva.Wrapper.Logger;
 
 namespace ajiva.Utils
 {
-    public record UpdateInfo(TimeSpan Delta, long Iteration);
+    public record struct UpdateInfo(TimeSpan Delta, long Iteration);
 
     public class RunHelper
     {
@@ -24,7 +23,7 @@ namespace ajiva.Utils
             {
                 Thread.Sleep(1);
 
-                if (!action.Invoke(info with {Delta = delta, Iteration = iteration})) return;
+                if (!action.Invoke(info with { Delta = delta, Iteration = iteration })) return;
 
                 iteration++;
 
