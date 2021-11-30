@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace Ajiva.Wrapper.Logger
 {
@@ -28,7 +29,7 @@ namespace Ajiva.Wrapper.Logger
                 _ => throw new ArgumentOutOfRangeException(nameof(level), level, null)
             };
         }
-
+        public static void LogTo(string file, object value) => LogFile(file, value);
         public static void Log(ALogLevel level, object value) => LogAndFormats(level, value, new StackFrame(1, true));
         public static void Trace(object value) => LogAndFormats(ALogLevel.Trace, value, new StackFrame(1, true));
         public static void Debug(object value) => LogAndFormats(ALogLevel.Debug, value, new StackFrame(1, true));
@@ -81,6 +82,21 @@ namespace Ajiva.Wrapper.Logger
                     Console.ForegroundColor = cbF;
                 if (Console.BackgroundColor != cbB)
                     Console.BackgroundColor = cbB;
+            }
+        }
+
+        private static void LogFile(string file, object value)
+        {
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(file));
+                var fs = File.AppendText(file);
+                fs.WriteLine(value);
+                fs.Close();
+            }
+            catch (Exception e)
+            {
+                Error(e);
             }
         }
 
