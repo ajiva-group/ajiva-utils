@@ -4,19 +4,9 @@ using System.IO;
 
 namespace Ajiva.Wrapper.Logger
 {
-    public enum ALogLevel
-    {
-        Trace = 0,
-        Debug = 1,
-        Info = 2,
-        Warning = 3,
-        Error = 4,
-        Fatal = 5,
-    }
-
     public static class ALog
     {
-        static string ALogLevelToString(ALogLevel level)
+        public static string ALogLevelToString(ALogLevel level)
         {
             return level switch
             {
@@ -29,6 +19,7 @@ namespace Ajiva.Wrapper.Logger
                 _ => throw new ArgumentOutOfRangeException(nameof(level), level, null)
             };
         }
+
         public static void LogTo(string file, object value) => LogFile(file, value);
         public static void Log(ALogLevel level, object value) => LogAndFormats(level, value, new StackFrame(1, true));
         public static void Trace(object value) => LogAndFormats(ALogLevel.Trace, value, new StackFrame(1, true));
@@ -105,12 +96,9 @@ namespace Ajiva.Wrapper.Logger
         public static void WriteLine(object value)
         {
             lock (WriteLock)
-            {
                 Console.WriteLine(value);
-            }
         }
     }
-
     public readonly struct LogSegment
     {
         public LogSegment(string value, ConsoleColor? foreground = null, ConsoleColor? background = null)
