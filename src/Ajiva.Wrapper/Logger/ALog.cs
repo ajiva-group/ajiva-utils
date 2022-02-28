@@ -6,6 +6,7 @@ namespace Ajiva.Wrapper.Logger
 {
     public static class ALog
     {
+        public static ALogLevel MinimumLogLevel { get; set; }
         public static string ALogLevelToString(ALogLevel level)
         {
             return level switch
@@ -31,6 +32,7 @@ namespace Ajiva.Wrapper.Logger
 
         private static void LogAndFormats(ALogLevel level, object value, StackFrame stackFrame)
         {
+            if(level < MinimumLogLevel) return;
             var mainColor = level switch
             {
                 ALogLevel.Trace => ConsoleColor.DarkGray,
